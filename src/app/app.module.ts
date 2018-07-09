@@ -7,20 +7,25 @@ import { AppComponent } from './app.component';
 import { UrlRedirectionComponent } from './url-redirection/url-redirection.component';
 import { UrlCreationFormComponent } from './url-creation-form/url-creation-form.component';
 import { UrlListComponent } from './url-list/url-list.component';
+import {UrlService} from './services/url.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UrlDeletionComponent } from './url-deletion/url-deletion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UrlRedirectionComponent,
     UrlCreationFormComponent,
-    UrlListComponent
+    UrlListComponent,
+    PageNotFoundComponent,
+    UrlDeletionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [UrlService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

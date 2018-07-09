@@ -1,10 +1,12 @@
 <h3>Lista de URLs creadas en esta sesión</h3>
 <table>
   <tr>
-    <th>Url Corta</th><th>Url Larga</th>
+    <th>Url Corta</th><th>Url Larga</th><th></th>
   </tr>
   <tr *ngFor="let urlRow of urlList">
-    <td><a href="{{localUrlDomain}}{{urlRow.hash}}">{{localUrlDomain}}{{urlRow.hash}}</a></td><td>{{urlRow.urlLong}}</td>
+    <td><a href="{{localUrlDomain}}{{urlRow.hash}}">{{localUrlDomain}}{{urlRow.hash}}</a></td>
+    <td>{{urlRow.urlLong}}</td>
+    <td><button title="Delete this url" routerLink="/delete/{{urlRow.hash}}">Delete this url</button></td>
   </tr>
 
 </table>

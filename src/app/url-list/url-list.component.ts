@@ -1,24 +1,27 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 
 import { UrlDTO} from '../model/url-dto';
+import {AppSettings} from '../utils/app-settings';
+import {UrlService} from '../services/url.service';
 
 @Component({
   selector: 'app-url-list',
   templateUrl: './url-list.component.html',
   styleUrls: ['./url-list.component.css']
 })
-export class UrlListComponent implements OnInit {
-  public urlList: UrlDTO[] =  [
-    {hash:'aaaa',urlLong:'http://www.google.es'},
-    {hash:'aabb',urlLong:'http://www.google.uk'},
-    {hash:'aacc',urlLong:'http://www.google.mx'}
-  ];
+export class UrlListComponent implements OnInit, OnChanges {
 
-public localUrlDomain: string = 'http://localhost:4200/';
+urlList: UrlDTO[] =  [];
+localUrlDomain: string = AppSettings.LOCAL_URL_DOMAIN;
 
-  constructor() { }
+  constructor(private urlService: UrlService) { }
 
   ngOnInit() {
+    this.urlList = this.urlService.getUrls();
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    this.urlList = this.urlService.getUrls();
   }
 
 }

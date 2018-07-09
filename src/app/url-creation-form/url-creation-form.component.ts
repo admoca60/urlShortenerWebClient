@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {UrlService} from '../services/url.service';
+import {UrlDTO} from '../model/url-dto';
 
 @Component({
   selector: 'app-url-creation-form',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UrlCreationFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(private urlService: UrlService) { }
 
   ngOnInit() {
   }
@@ -15,7 +17,8 @@ export class UrlCreationFormComponent implements OnInit {
   addNewUrl(newUrl: string) {
     if (newUrl) {
     /*  this.heroes.push(newHero);*/
-    console.log("Se incluye nueva URL "+ newUrl);
+    var urlDTO: UrlDTO = this.urlService.addUrl(newUrl);
+    console.log("Se incluye nueva URL "+ newUrl + " con código hash "+urlDTO.hash);
     }
   }
 }
