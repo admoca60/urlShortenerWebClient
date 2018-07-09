@@ -1,0 +1,3 @@
+<h2>Formulario creación nueva URL Corta</h2>
+<input #newUrl (keyup.enter)="addNewUrl(newUrl.value);newUrl.value=''" placeholder="Introduzca la Url que desea acortar">
+<button (click)="addNewUrl(newUrl.value);newUrl.value=''">Add new Url</button>

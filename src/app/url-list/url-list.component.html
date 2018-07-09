@@ -1,0 +1,10 @@
+<h3>Lista de URLs creadas en esta sesión</h3>
+<table>
+  <tr>
+    <th>Url Corta</th><th>Url Larga</th>
+  </tr>
+  <tr *ngFor="let urlRow of urlList">
+    <td><a href="{{localUrlDomain}}{{urlRow.hash}}">{{localUrlDomain}}{{urlRow.hash}}</a></td><td>{{urlRow.urlLong}}</td>
+  </tr>
+
+</table>
