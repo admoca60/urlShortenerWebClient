@@ -14,17 +14,27 @@ export class UrlRedirectionComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private urlService: UrlService) { }
+    private urlService: UrlService) {
+      var hashParam :string = this.route.snapshot.paramMap.get('hash');
+
+      var urlDTO = this.urlService.getUrl(hashParam);
+
+      if(urlDTO){
+        console.log("La url a la que se va a navegar es "+urlDTO.urlLong);
+        window.location.href=urlDTO.urlLong;
+      }
+
+    }
 
   ngOnInit() {
-    var hashParam :string = this.route.snapshot.paramMap.get('hash');
+    /*var hashParam :string = this.route.snapshot.paramMap.get('hash');
 
     var urlDTO = this.urlService.getUrl(hashParam);
 
     if(urlDTO){
       console.log("La url a la que se va a navegar es "+urlDTO.urlLong);
       window.location.href=urlDTO.urlLong;
-    }
+    }*/
   }
 
 }

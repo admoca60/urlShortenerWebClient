@@ -21,5 +21,9 @@ localUrlDomain: string = AppSettings.LOCAL_URL_DOMAIN;
     this.urlService.urlListCast.subscribe(urlList=> this.urlList = urlList);
   }
 
+deleteUrl(hash:string){
+  console.log('invocado servicio para eliminar la url '+hash);
+  this.urlService.deleteUrl(hash);
+}
 
 }

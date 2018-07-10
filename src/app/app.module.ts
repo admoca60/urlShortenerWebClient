@@ -9,7 +9,6 @@ import { UrlCreationFormComponent } from './url-creation-form/url-creation-form.
 import { UrlListComponent } from './url-list/url-list.component';
 import {UrlService} from './services/url.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { UrlDeletionComponent } from './url-deletion/url-deletion.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +17,6 @@ import { UrlDeletionComponent } from './url-deletion/url-deletion.component';
     UrlCreationFormComponent,
     UrlListComponent,
     PageNotFoundComponent,
-    UrlDeletionComponent
   ],
   imports: [
     BrowserModule,
