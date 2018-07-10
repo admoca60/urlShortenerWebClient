@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject,Observable } from 'rxjs';
 import {UrlDTO} from '../model/url-dto';
 
 @Injectable({
@@ -8,19 +8,22 @@ import {UrlDTO} from '../model/url-dto';
 export class UrlService {
 
   //public urlList: UrlDTO[] =  [];
-private urlList = new BehaviorSubject<UrlDTO[]>([]);
-urlListCast = this.urlList.asObservable();
+private urlList;
+urlListCast:Observable<UrlDTO[]>;
 
-  constructor() { }
+  constructor() {
+    this.urlList = new BehaviorSubject<UrlDTO[]>(this.getUrls());
+    this.urlListCast = this.urlList.asObservable();
+  }
 
-  /*getUrls(){
+  private getUrls(){
     //TODO fixme
-    this.urlList = this.getFromLocalStorage() as UrlDTO[];
-    if(!this.urlList){
-      this.urlList = [];
+    let urlListLocal = this.getFromLocalStorage() as UrlDTO[];
+    if(!urlListLocal){
+      urlListLocal = [];
     }
-    return  this.urlList.next();
-  }*/
+    return  urlListLocal;
+  }
   addUrl(urlLong:string){
     let nextIdObj:string = localStorage.getItem('contador');
     let nextId:number = 0;
