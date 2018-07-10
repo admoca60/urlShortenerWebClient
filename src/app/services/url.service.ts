@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { BehaviorSubject } from 'rxjs';
 import {UrlDTO} from '../model/url-dto';
 
 @Injectable({
@@ -7,63 +7,74 @@ import {UrlDTO} from '../model/url-dto';
 })
 export class UrlService {
 
-  public urlList: UrlDTO[] =  [];
-
-  seq: number = 0;
+  //public urlList: UrlDTO[] =  [];
+private urlList = new BehaviorSubject<UrlDTO[]>([]);
+urlListCast = this.urlList.asObservable();
 
   constructor() { }
 
-  getUrls(){
+  /*getUrls(){
     //TODO fixme
     this.urlList = this.getFromLocalStorage() as UrlDTO[];
     if(!this.urlList){
       this.urlList = [];
     }
-    return  this.urlList;
-  }
+    return  this.urlList.next();
+  }*/
   addUrl(urlLong:string){
-    //TODO fixme
-    var urlDTOObj: UrlDTO = new UrlDTO('aa'+(this.seq++).toString(),urlLong);
-    this.urlList = this.getFromLocalStorage() as UrlDTO[];
-    if(!this.urlList){
-      this.urlList = [];
+    let nextIdObj:string = localStorage.getItem('contador');
+    let nextId:number = 0;
+    if(nextIdObj){
+      nextId=Number.parseInt(nextIdObj,10);
+
     }
-    this.urlList.push(urlDTOObj);
-    this.setToLocalStorage(this.urlList);
+    nextId++;
+    //TODO fixme
+    var urlDTOObj: UrlDTO = new UrlDTO('aa'+nextId.toString(),urlLong);
+    localStorage.setItem('contador',nextId.toString());
+
+    let urlListLocal = this.getFromLocalStorage() as UrlDTO[];
+    if(!urlListLocal){
+      urlListLocal = [];
+    }
+    urlListLocal.push(urlDTOObj);
+    this.setToLocalStorage(urlListLocal);
+    this.urlList.next(urlListLocal);
     return urlDTOObj;
   }
 
   getUrl(hash:string){
-    this.urlList = this.getFromLocalStorage() as UrlDTO[];
-    if(!this.urlList){
-      this.urlList = [];
+    let urlListLocal = this.getFromLocalStorage() as UrlDTO[];
+    if(!urlListLocal){
+      urlListLocal = [];
     }
     //TODO fixme
     var indexUrl = -1;
-    this.urlList.forEach( (item, index) =>{
+    urlListLocal.forEach( (item, index) =>{
       if(item.hash===hash){
         indexUrl = index;
       }
     })
     if(indexUrl!=-1){
-      return this.urlList[indexUrl];
+      return urlListLocal[indexUrl];
     }else{
       return null;
     }
 
   }
   deleteUrl(hash:string){
-    this.urlList = this.getFromLocalStorage() as UrlDTO[];
-    if(!this.urlList){
-      this.urlList = [];
+    let urlListLocal = this.getFromLocalStorage() as UrlDTO[];
+    if(!urlListLocal){
+      urlListLocal = [];
     }
     //TODO fixme
-    this.urlList.forEach( (item, index) =>{
+    urlListLocal.forEach( (item, index) =>{
       if(item.hash===hash){
-        this.urlList.splice(index,1);
+        urlListLocal.splice(index,1);
       }
     })
-    this.setToLocalStorage(this.urlList);
+    this.setToLocalStorage(urlListLocal);
+    this.urlList.next(urlListLocal);
   }
   /*
   public urlList: UrlDTO[] =  [
@@ -109,9 +120,9 @@ export class UrlService {
   }*/
 
   private getFromLocalStorage(){
-    return JSON.parse(localStorage.getItem('urlList'));
+    return JSON.parse(localStorage.getItem('urlListLS'));
   }
   private setToLocalStorage(urlList:UrlDTO[]){
-    localStorage.setItem('urlList',JSON.stringify(urlList));
+    localStorage.setItem('urlListLS',JSON.stringify(urlList));
   }
 }
