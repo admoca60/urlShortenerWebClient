@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 
 import { UrlDTO} from '../model/url-dto';
-import {AppSettings} from '../utils/app-settings';
+import {environment} from '../../environments/environment';
 import {UrlService} from '../services/url.service';
 
 @Component({
@@ -12,7 +12,7 @@ import {UrlService} from '../services/url.service';
 export class UrlListComponent implements OnInit {
 
 urlList: UrlDTO[] =  [];
-localUrlDomain: string = AppSettings.LOCAL_URL_DOMAIN;
+localUrlDomain: string = environment.localDomainProtocol + "://"+environment.localDomainHost+":"+environment.localDomainPort+environment.localDomainContext;
 
   constructor(private urlService: UrlService) {
    }

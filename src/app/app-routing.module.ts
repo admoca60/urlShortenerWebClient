@@ -6,8 +6,8 @@ import {UrlCreationFormComponent}  from './url-creation-form/url-creation-form.c
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  {   path: '',component: UrlCreationFormComponent  },
-  {   path: ':hash',component: UrlRedirectionComponent  },
+  {path: '',component: UrlCreationFormComponent  },
+  {path: ':hash',component: UrlRedirectionComponent  },
   {path: '**', component: PageNotFoundComponent}
 ];
 
