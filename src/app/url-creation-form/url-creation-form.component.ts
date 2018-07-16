@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import {UrlService} from '../services/url.service';
 import {UrlDTO} from '../model/url-dto';
 import {environment} from '../../environments/environment';
+import {EventService} from '../utils/event.service';
 
 @Component({
   selector: 'app-url-creation-form',
@@ -18,7 +19,7 @@ export class UrlCreationFormComponent implements OnInit {
   public newUrlShort:string;
   public localUrlDomain: string = environment.localDomainProtocol + "://"+environment.localDomainHost+":"+environment.localDomainPort+environment.localDomainContext;
 
-  constructor(private urlService: UrlService) { }
+  constructor(private urlService: UrlService, private eventService: EventService) { }
 
   ngOnInit() {
   }
@@ -37,6 +38,7 @@ export class UrlCreationFormComponent implements OnInit {
             if(responseWrapperDTO.status){
               urlDTO = responseWrapperDTO.data as UrlDTO;
               this.newUrlShort = this.localUrlDomain+urlDTO.hashCode;
+              this.eventService.broadcastEvent("createUrl",urlDTO);
               console.log("Se incluye nueva URL "+ this.newUrlLongModel + " con código hash "+urlDTO.hashCode);
               form.resetForm();
             }else{

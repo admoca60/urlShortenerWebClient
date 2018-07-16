@@ -25,12 +25,12 @@ public getUrlBackend(hashCode:string):Observable<ResponseWrapperUrlDTO>{
 
 public addUrlBackend(urlLong:string):Observable<ResponseWrapperUrlDTO>{
   var data2Send:UrlDTO = new UrlDTO(null,urlLong);
-  return this.httpClient.post(this.backendUrlDomain+"/add/",data2Send).pipe(map((res:Response)=>res.json()));
+  return this.httpClient.post(this.backendUrlDomain+"add/",data2Send).pipe(map((res:Response)=>res.json()));
 }
 
 
 public deleteUrlBackend(hashCode:string):Observable<ResponseWrapperUrlDTO>{
-  return this.httpClient.delete(this.backendUrlDomain+"/delete/"+hashCode).pipe(map((res:Response)=>res.json()));
+  return this.httpClient.delete(this.backendUrlDomain+"delete/"+hashCode).pipe(map((res:Response)=>res.json()));
 }
 
 
