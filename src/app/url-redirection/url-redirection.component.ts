@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import {UrlService} from '../services/url.service';
 import {UrlDTO} from '../model/url-dto';
+import {ResponseWrapperUrlDTO} from '../model/response-wrapper-url-dto';
 
 @Component({
   selector: 'app-url-redirection',
@@ -10,31 +11,43 @@ import {UrlDTO} from '../model/url-dto';
   styleUrls: ['./url-redirection.component.css']
 })
 export class UrlRedirectionComponent implements OnInit {
+public errorCode:number;
+public errorMessage:string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private urlService: UrlService) {
-      var hashParam :string = this.route.snapshot.paramMap.get('hash');
-
-      var urlDTO = this.urlService.getUrl(hashParam);
-
-      if(urlDTO){
-        console.log("La url a la que se va a navegar es "+urlDTO.urlLong);
-        window.location.href=urlDTO.urlLong;
-      }
-
     }
 
   ngOnInit() {
-    /*var hashParam :string = this.route.snapshot.paramMap.get('hash');
+    var hashParam :string = this.route.snapshot.paramMap.get('hashCode');
 
-    var urlDTO = this.urlService.getUrl(hashParam);
+    var urlDTO:UrlDTO;
 
-    if(urlDTO){
-      console.log("La url a la que se va a navegar es "+urlDTO.urlLong);
-      window.location.href=urlDTO.urlLong;
-    }*/
+
+    this.urlService.getUrlBackend(hashParam).subscribe(responseWrapperDTO=>
+        {
+            if(responseWrapperDTO.status){
+            urlDTO = responseWrapperDTO.data;
+            this.errorCode=null;
+            this.errorMessage=null;
+
+            if(urlDTO){
+              console.log("La url a la que se va a navegar es "+urlDTO.urlLong);
+              window.location.href=urlDTO.urlLong;
+            }
+
+          }else{
+            this.errorCode = responseWrapperDTO.errorDesc.errorCode;
+            this.errorMessage = responseWrapperDTO.errorDesc.errorDesc;
+          }
+        }
+      );
+
+
+
+
   }
 
 }

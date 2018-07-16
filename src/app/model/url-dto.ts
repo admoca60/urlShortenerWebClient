@@ -1,9 +1,9 @@
 export class UrlDTO {
-  public hash: string;
+  public hashCode: string;
   public urlLong: string;
 
-  constructor(hash, urlLong){
-    this.hash = hash;
+  constructor(hashCode, urlLong){
+    this.hashCode = hashCode;
     this.urlLong = urlLong;
   }
 }

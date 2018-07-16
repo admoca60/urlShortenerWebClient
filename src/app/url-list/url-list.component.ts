@@ -4,6 +4,8 @@ import { UrlDTO} from '../model/url-dto';
 import {environment} from '../../environments/environment';
 import {UrlService} from '../services/url.service';
 
+import {ResponseWrapperUrlDTO} from '../model/response-wrapper-url-dto';
+
 @Component({
   selector: 'app-url-list',
   templateUrl: './url-list.component.html',
@@ -11,19 +13,42 @@ import {UrlService} from '../services/url.service';
 })
 export class UrlListComponent implements OnInit {
 
-urlList: UrlDTO[] =  [];
-localUrlDomain: string = environment.localDomainProtocol + "://"+environment.localDomainHost+":"+environment.localDomainPort+environment.localDomainContext;
+
+
+public urlList: UrlDTO[];
+public errorMessage:string;
+public errorCode:number;
+public successMessage:string;
+public localUrlDomain: string = environment.localDomainProtocol + "://"+environment.localDomainHost+":"+environment.localDomainPort+environment.localDomainContext;
 
   constructor(private urlService: UrlService) {
    }
 
   ngOnInit() {
-    this.urlService.urlListCast.subscribe(urlList=> this.urlList = urlList);
+    this.urlService.getUrlsBackend().subscribe(responseWrapperDTO=>
+        {
+            if(responseWrapperDTO.status){
+            this.urlList = responseWrapperDTO.data;
+          }else{
+            this.errorCode = responseWrapperDTO.errorDesc.errorCode;
+            this.errorMessage = responseWrapperDTO.errorDesc.errorDesc;
+          }
+        }
+      );
   }
 
-deleteUrl(hash:string){
-  console.log('invocado servicio para eliminar la url '+hash);
-  this.urlService.deleteUrl(hash);
+deleteUrl(hashCode:string){
+  console.log('invocado servicio para eliminar la url '+hashCode);
+  this.urlService.deleteUrlBackend(hashCode).subscribe(responseWrapperDTO=>
+      {
+          if(responseWrapperDTO.status){
+          this.successMessage="Eliminación correcta de la URL corta "+this.localUrlDomain+hashCode;
+        }else{
+          this.errorCode = responseWrapperDTO.errorDesc.errorCode;
+          this.errorMessage = responseWrapperDTO.errorDesc.errorDesc;
+        }
+      }
+    );
 }
 
 }

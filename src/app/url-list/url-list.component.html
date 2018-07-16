@@ -4,9 +4,9 @@
     <th>Url Corta</th><th>Url Larga</th><th></th>
   </tr>
   <tr *ngFor="let urlRow of urlList">
-    <td><a href="{{localUrlDomain}}{{urlRow.hash}}">{{localUrlDomain}}{{urlRow.hash}}</a></td>
+    <td><a href="{{localUrlDomain}}{{urlRow.hashCode}}">{{localUrlDomain}}{{urlRow.hashCode}}</a></td>
     <td>{{urlRow.urlLong}}</td>
-    <td><button title="Delete this url" (click)="deleteUrl(urlRow.hash)">Delete this url</button></td>
+    <td><button title="Delete this url" (click)="deleteUrl(urlRow.hashCode)">Delete this url</button></td>
   </tr>
 
 </table>
