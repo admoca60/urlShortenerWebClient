@@ -39,7 +39,6 @@ export class UrlCreationFormComponent implements OnInit {
               urlDTO = responseWrapperDTO.data as UrlDTO;
               this.newUrlShort = this.localUrlDomain+urlDTO.hashCode;
               this.eventService.broadcastEvent("createUrl",urlDTO);
-              console.log("Se incluye nueva URL "+ this.newUrlLongModel + " con código hash "+urlDTO.hashCode);
               form.resetForm();
             }else{
               this.errorCode = responseWrapperDTO.errorDesc.errorCode;

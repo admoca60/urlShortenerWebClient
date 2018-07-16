@@ -13,6 +13,7 @@ import {ResponseWrapperUrlDTO} from '../model/response-wrapper-url-dto';
 export class UrlRedirectionComponent implements OnInit {
 public errorCode:number;
 public errorMessage:string;
+public nextUrl:string;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,7 +35,7 @@ public errorMessage:string;
             this.errorMessage=null;
 
             if(urlDTO){
-              console.log("La url a la que se va a navegar es "+urlDTO.urlLong);
+              this.nextUrl = urlDTO.urlLong;
               window.location.href=urlDTO.urlLong;
             }
 

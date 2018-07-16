@@ -43,7 +43,6 @@ public localUrlDomain: string = environment.localDomainProtocol + "://"+environm
   }
 
 deleteUrl(hashCode:string){
-  console.log('invocado servicio para eliminar la url '+hashCode);
   this.urlService.deleteUrlBackend(hashCode).subscribe(responseWrapperDTO=>
       {
           if(responseWrapperDTO.status){
@@ -54,7 +53,7 @@ deleteUrl(hashCode:string){
                   this.urlList.splice(index,1);
                 }
               })
-            this.successMessage="Eliminación correcta de la URL corta "+this.localUrlDomain+hashCode;
+            this.successMessage="Successful deletion of URL short  "+this.localUrlDomain+hashCode;
           }else{
             this.errorCode = responseWrapperDTO.errorDesc.errorCode;
             this.errorMessage = responseWrapperDTO.errorDesc.errorDesc;

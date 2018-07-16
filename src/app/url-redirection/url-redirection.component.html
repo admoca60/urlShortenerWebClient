@@ -1,3 +1,12 @@
-<p>
-  Este componente redireccionará a la URL correcta en caso de existir
-</p>
+<div *ngIf="errorCode!=null">
+  <p>
+    The error {{errorCode}} has occurred with the following message: {{errorMessage}}
+  </p>
+</div>
+<div *ngIf="errorCode==null">
+  <p>
+    You will be shortly redirected to the targeted URL. Thanks for using our services.
+    In case you can't access, please, click in the following link
+  </p>
+  <a href="{{nextUrl}}" target="_self">{{nextUrl}}</a>
+</div>
