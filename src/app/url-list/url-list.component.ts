@@ -37,9 +37,9 @@ public localUrlDomain: string = environment.localDomainProtocol + "://"+environm
         }
       );
 
-      this.eventService.getEvent("createUrl").subscribe(event=>{
-        this.urlList.push(event.value);
-      });
+      // this.eventService.getEvent("createUrl").subscribe(event=>{
+      //   this.urlList.push(event.value);
+      // });
   }
 
 deleteUrl(hashCode:string){

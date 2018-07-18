@@ -10,6 +10,10 @@ import { UrlCreationFormComponent } from './url-creation-form/url-creation-form.
 import { UrlListComponent } from './url-list/url-list.component';
 import {UrlService} from './services/url.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AngularMaterialComponentModule} from './angular-material-components-module';
+import { NavigationComponentComponent } from './navigation-component/navigation-component.component';
+
 
 @NgModule({
   declarations: [
@@ -17,13 +21,16 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     UrlRedirectionComponent,
     UrlCreationFormComponent,
     UrlListComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    NavigationComponentComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    BrowserAnimationsModule,
+    AngularMaterialComponentModule
   ],
   providers: [UrlService],
   bootstrap: [AppComponent]
