@@ -17,7 +17,6 @@ export class UrlListComponent implements OnInit {
 
 public urlList: UrlDTO[];
 public errorMessage:string;
-public errorCode:number;
 public successMessage:string;
 public localUrlDomain: string = environment.localDomainProtocol + "://"+environment.localDomainHost+":"+environment.localDomainPort+environment.localDomainContext;
 
@@ -31,8 +30,8 @@ public localUrlDomain: string = environment.localDomainProtocol + "://"+environm
             if(responseWrapperDTO.status){
             this.urlList = responseWrapperDTO.data;
           }else{
-            this.errorCode = responseWrapperDTO.errorDesc.errorCode;
-            this.errorMessage = responseWrapperDTO.errorDesc.errorDesc;
+            this.errorMessage = "Error code:"+responseWrapperDTO.errorDesc.errorCode+", "+
+                        "Error message:"+responseWrapperDTO.errorDesc.errorDesc;
           }
         }
       );
@@ -55,8 +54,8 @@ deleteUrl(hashCode:string){
               })
             this.successMessage="Successful deletion of URL short  "+this.localUrlDomain+hashCode;
           }else{
-            this.errorCode = responseWrapperDTO.errorDesc.errorCode;
-            this.errorMessage = responseWrapperDTO.errorDesc.errorDesc;
+            this.errorMessage = "Error code:"+responseWrapperDTO.errorDesc.errorCode+", "+
+                        "Error message:"+responseWrapperDTO.errorDesc.errorDesc;
           }
       }
     );

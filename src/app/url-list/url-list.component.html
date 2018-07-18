@@ -1,4 +1,11 @@
-<h3>List of all URLs created</h3>
+<h1 class="section_title">List of all URLs created</h1>
+<div *ngIf="errorMessage" class="section_content alert alert-danger">
+  <span>An error has been happened with the following information => {{errorMessage}}</span>
+  <br/>
+  <span>Please, try again in a few minutes. Thank you!</span>
+</div>
+
+
 <table style="margin:auto">
   <tr>
     <th>Url Corta</th><th>Url Larga</th><th></th>

@@ -1,12 +1,36 @@
-<h2>Creation of new short URL form</h2>
-<form #urlCreationForm="ngForm" (ngSubmit)="onFormSubmit(urlCreationForm)">
-  <input id="newUrlLongCreationForm" name="newUrlLongCreationForm" type="text"
-  #newUrlLongCreationForm="ngModel" (keyup.enter)="onFormSubmit(urlCreationForm)" [pattern]="patronUrl"
-  placeholder="Type the URL which you want to short" required [(ngModel)]="newUrlLongModel">
-  <div [hidden]="newUrlLongCreationForm.valid || newUrlLongCreationForm.pristine"
-     class="alert alert-danger">
-     <div [hidden]="!newUrlLongCreationForm.hasError('required')">Url is required</div>
-     <div [hidden]="!newUrlLongCreationForm.hasError('pattern')">The url written is not right</div>
-  </div>
-  <button type="submit" class="btn btn-success" [disabled]="!urlCreationForm.valid" [disabled]="!newUrlLongCreationForm.valid">Add new Url</button>
-</form>
+<h1 class="section_title">Creation of new short URL</h1>
+<div *ngIf="errorMessage" class="section_content alert alert-danger">
+  <span>An error has been happened with the following information => {{errorMessage}}</span>
+  <br/>
+  <span>Please, try again in a few minutes. Thank you!</span>
+</div>
+<div class="section_content">
+  <form #urlCreationForm="ngForm" (ngSubmit)="onFormSubmit(urlCreationForm)" class="form_content">
+    <mat-form-field hintLabel="Max 2000 characters" color="primary">
+      <input matInput
+      id="newUrlLongCreationForm" name="newUrlLongCreationForm" type="text"
+      #newUrlLongCreationForm="ngModel" (keyup.enter)="onFormSubmit(urlCreationForm)"
+       maxlength="2000" autocomplete="off"
+       [(ngModel)]="newUrlLongModel"
+      placeholder="Type the URL which you want to short"
+      required [pattern]="patronUrl">
+      <mat-hint align="end">{{newUrlLongCreationForm.value?.length || 0}}/2000</mat-hint>
+      <mat-error *ngIf="newUrlLongCreationForm.invalid">
+        <span [hidden]="!newUrlLongCreationForm.hasError('required')">Url is required</span>
+        <span [hidden]="!newUrlLongCreationForm.hasError('pattern')">The url written is not right</span>
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" color="accent"
+    [disabled]="!newUrlLongCreationForm.valid"
+    matTooltip="Click here to generate the short url for this long url" matTooltipPosition="below"
+    >Add new Url</button>
+  </form>
+</div>
+<div *ngIf="newUrlShort" class="section_content alert alert-success">
+  <span>Congratulations, you have created the following short url!!!</span>
+  <br/>
+  <span><strong>{{newUrlShort}}</strong></span>
+  <br/>
+  <span><a mat-raised-button href="{{newUrlShort}}" target="_blank">Try me!</a></span>
+</div>

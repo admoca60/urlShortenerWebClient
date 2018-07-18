@@ -5,4 +5,55 @@ body{
   margin:0;
   padding:0;
   background-color: #fafafa;
+  font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
 }
+
+
+.section_title{
+  display:block;
+  margin:auto;
+  text-align: center;
+}
+
+.section_content {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin:auto;
+}
+.section_content a{
+  width: 150px;
+}
+
+.section_content form {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.section_content form > * {
+  margin: 5px 0;
+}
+
+.form_content > * {
+  width: 100%;
+}
+.form_content button{
+  width: inherit;
+}
+.alert{
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  text-align: center;
+}
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+  }
+  .alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+  }

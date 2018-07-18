@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
 import {UrlService} from '../services/url.service';
 import {UrlDTO} from '../model/url-dto';
 import {environment} from '../../environments/environment';
@@ -15,16 +16,17 @@ export class UrlCreationFormComponent implements OnInit {
   newUrlLongModel:string;
 
   public errorMessage:string;
-  public errorCode:number;
+
   public newUrlShort:string;
   public localUrlDomain: string = environment.localDomainProtocol + "://"+environment.localDomainHost+":"+environment.localDomainPort+environment.localDomainContext;
 
-  constructor(private urlService: UrlService, private eventService: EventService) { }
+
+  constructor(private urlService: UrlService, private eventService: EventService) {
+
+   }
 
   ngOnInit() {
   }
-
-
 
   onFormSubmit(form: NgForm) {
      if (form.invalid) {
@@ -32,7 +34,7 @@ export class UrlCreationFormComponent implements OnInit {
      }
     //alert('click boton. url '+this.newUrlLongModel);
     var urlDTO: UrlDTO;
-
+    this.resetTemporalValues();
     this.urlService.addUrlBackend(this.newUrlLongModel).subscribe(responseWrapperDTO=>
         {
             if(responseWrapperDTO.status){
@@ -41,8 +43,8 @@ export class UrlCreationFormComponent implements OnInit {
               //this.eventService.broadcastEvent("createUrl",urlDTO);
               form.resetForm();
             }else{
-              this.errorCode = responseWrapperDTO.errorDesc.errorCode;
-              this.errorMessage = responseWrapperDTO.errorDesc.errorDesc;
+              this.errorMessage = "Error code:"+responseWrapperDTO.errorDesc.errorCode+", "+
+                          "Error message:"+responseWrapperDTO.errorDesc.errorDesc;
             }
         }
       );
@@ -53,7 +55,6 @@ export class UrlCreationFormComponent implements OnInit {
   }
 
   private resetTemporalValues(){
-    this.errorCode=null;
     this.errorMessage=null;
     this.newUrlShort=null;
   }

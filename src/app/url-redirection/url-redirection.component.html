@@ -1,9 +1,9 @@
-<div *ngIf="errorCode!=null">
-  <p>
-    The error {{errorCode}} has occurred with the following message: {{errorMessage}}
-  </p>
+<div *ngIf="errorMessage" class="section_content alert alert-danger">
+  <span>An error has been happened with the following information => {{errorMessage}}</span>
+  <br/>
+  <span>Please, try again in a few minutes. Thank you!</span>
 </div>
-<div *ngIf="errorCode==null">
+<div *ngIf="!errorMessage" class="section_content alert alert-success">
   <p>
     You will be shortly redirected to the targeted URL. Thanks for using our services.
     In case you can't access, please, click in the following link

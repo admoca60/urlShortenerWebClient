@@ -11,7 +11,7 @@ import {ResponseWrapperUrlDTO} from '../model/response-wrapper-url-dto';
   styleUrls: ['./url-redirection.component.css']
 })
 export class UrlRedirectionComponent implements OnInit {
-public errorCode:number;
+
 public errorMessage:string;
 public nextUrl:string;
 
@@ -31,17 +31,17 @@ public nextUrl:string;
         {
             if(responseWrapperDTO.status){
             urlDTO = responseWrapperDTO.data;
-            this.errorCode=null;
             this.errorMessage=null;
 
             if(urlDTO){
               this.nextUrl = urlDTO.urlLong;
-              window.location.href=urlDTO.urlLong;
+
+              window.location.href=  urlDTO.urlLong.startsWith("http://") || urlDTO.urlLong.startsWith("https://") ? urlDTO.urlLong : "http://" + urlDTO.urlLong;
             }
 
           }else{
-            this.errorCode = responseWrapperDTO.errorDesc.errorCode;
-            this.errorMessage = responseWrapperDTO.errorDesc.errorDesc;
+            this.errorMessage = "Error code:"+responseWrapperDTO.errorDesc.errorCode+", "+
+                        "Error message:"+responseWrapperDTO.errorDesc.errorDesc;
           }
         }
       );
