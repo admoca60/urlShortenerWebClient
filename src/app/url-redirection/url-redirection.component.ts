@@ -43,6 +43,8 @@ public nextUrl:string;
             this.errorMessage = "Error code:"+responseWrapperDTO.errorDesc.errorCode+", "+
                         "Error message:"+responseWrapperDTO.errorDesc.errorDesc;
           }
+        },error=>{
+          this.errorMessage = "Error processing the request against the server";
         }
       );
 

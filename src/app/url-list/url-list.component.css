@@ -1,0 +1,26 @@
+table {
+  margin-top:1em;
+  width: 100%;
+  table-layout: fixed;
+}
+table th, table td{
+  text-align: center;
+}
+.mat-column-shortUrl{
+  width: 12%;
+}
+.mat-column-longUrl{
+  width: 76%;
+}
+
+.mat-column-longUrl span{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 90%;
+  display: block;
+  margin:auto;
+}
+.mat-column-actions{
+  width: 12%;
+}

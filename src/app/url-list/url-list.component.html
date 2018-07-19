@@ -5,15 +5,46 @@
   <span>Please, try again in a few minutes. Thank you!</span>
 </div>
 
+<div *ngIf="successMessage" class="section_content alert alert-success">
+  <span>{{successMessage}}</span>
+</div>
 
-<table style="margin:auto">
-  <tr>
-    <th>Url Corta</th><th>Url Larga</th><th></th>
-  </tr>
-  <tr *ngFor="let urlRow of urlList">
-    <td><a href="{{localUrlDomain}}{{urlRow.hashCode}}">{{localUrlDomain}}{{urlRow.hashCode}}</a></td>
-    <td>{{urlRow.urlLong}}</td>
-    <td><button title="Delete this url" (click)="deleteUrl(urlRow.hashCode)">Delete this url</button></td>
-  </tr>
+<div *ngIf="urlListEmpty" class="section_content alert alert-info">
+  <span>There isn't any available url</span>
+</div>
+<div *ngIf="!urlListEmpty">
+  <table mat-table [dataSource]="urlList" class="mat-elevation-z8" #urlListTable>
 
-</table>
+    <!-- shortUrl Column -->
+    <ng-container matColumnDef="shortUrl">
+      <th mat-header-cell *matHeaderCellDef> Short URL </th>
+      <td mat-cell *matCellDef="let urlRow">
+        <a mat-raised-button target="_blank" href="{{localUrlDomain}}{{urlRow.hashCode}}"
+        matTooltip="Click here to access" matTooltipPosition="below"
+        >{{localUrlDomain}}{{urlRow.hashCode}}</a>
+      </td>
+    </ng-container>
+
+    <!-- longUrl Column -->
+    <ng-container matColumnDef="longUrl">
+      <th mat-header-cell *matHeaderCellDef> Long URL </th>
+      <td mat-cell *matCellDef="let urlRow"> <span>{{urlRow.urlLong}} </span></td>
+    </ng-container>
+
+    <!-- actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let urlRow">
+        <button mat-icon-button (click)="deleteUrl(urlRow.hashCode)" matTooltip="Delete this url" matTooltipPosition="below">
+          <mat-icon aria-label="Delete the url">delete</mat-icon>
+        </button>
+       </td>
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>

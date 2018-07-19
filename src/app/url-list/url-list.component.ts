@@ -1,10 +1,15 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,ViewChild} from '@angular/core';
 
 import { UrlDTO} from '../model/url-dto';
 import {environment} from '../../environments/environment';
 import {UrlService} from '../services/url.service';
-import {EventService} from '../utils/event.service';
+//import {EventService} from '../utils/event.service';
 import {ResponseWrapperUrlDTO} from '../model/response-wrapper-url-dto';
+
+import {MatTable} from '@angular/material';
+
+
+
 
 @Component({
   selector: 'app-url-list',
@@ -13,14 +18,18 @@ import {ResponseWrapperUrlDTO} from '../model/response-wrapper-url-dto';
 })
 export class UrlListComponent implements OnInit {
 
-
+@ViewChild(MatTable) urlListTable: MatTable<UrlDTO>;
 
 public urlList: UrlDTO[];
+public displayedColumns: string[] = ['shortUrl', 'longUrl', 'actions'];
+
 public errorMessage:string;
 public successMessage:string;
+public urlListEmpty:boolean;
 public localUrlDomain: string = environment.localDomainProtocol + "://"+environment.localDomainHost+":"+environment.localDomainPort+environment.localDomainContext;
 
-  constructor(private urlService: UrlService, private eventService: EventService) {
+  constructor(private urlService: UrlService/*, private eventService: EventService*/) {
+    this.urlListEmpty=true;
    }
 
   ngOnInit() {
@@ -28,11 +37,14 @@ public localUrlDomain: string = environment.localDomainProtocol + "://"+environm
     this.urlService.getUrlsBackend().subscribe(responseWrapperDTO=>
         {
             if(responseWrapperDTO.status){
-            this.urlList = responseWrapperDTO.data;
-          }else{
-            this.errorMessage = "Error code:"+responseWrapperDTO.errorDesc.errorCode+", "+
-                        "Error message:"+responseWrapperDTO.errorDesc.errorDesc;
-          }
+              this.urlList = responseWrapperDTO.data;
+              this.refreshUrlListEmpty();
+            }else{
+              this.errorMessage = "Error code:"+responseWrapperDTO.errorDesc.errorCode+", "+
+                          "Error message:"+responseWrapperDTO.errorDesc.errorDesc;
+            }
+        },error=>{
+          this.errorMessage = "Error processing the request against the server";
         }
       );
 
@@ -53,12 +65,19 @@ deleteUrl(hashCode:string){
                 }
               })
             this.successMessage="Successful deletion of URL short  "+this.localUrlDomain+hashCode;
+            this.refreshUrlListEmpty();
+            this.urlListTable.renderRows();
           }else{
             this.errorMessage = "Error code:"+responseWrapperDTO.errorDesc.errorCode+", "+
                         "Error message:"+responseWrapperDTO.errorDesc.errorDesc;
           }
+      },error=>{
+        this.errorMessage = "Error processing the request against the server";
       }
     );
 }
 
+  private refreshUrlListEmpty(){
+    this.urlListEmpty = this.urlList.length==0;
+  }
 }

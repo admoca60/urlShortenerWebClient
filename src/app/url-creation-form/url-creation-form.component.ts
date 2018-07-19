@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import {UrlService} from '../services/url.service';
 import {UrlDTO} from '../model/url-dto';
 import {environment} from '../../environments/environment';
-import {EventService} from '../utils/event.service';
+//import {EventService} from '../utils/event.service';
 
 @Component({
   selector: 'app-url-creation-form',
@@ -21,7 +21,7 @@ export class UrlCreationFormComponent implements OnInit {
   public localUrlDomain: string = environment.localDomainProtocol + "://"+environment.localDomainHost+":"+environment.localDomainPort+environment.localDomainContext;
 
 
-  constructor(private urlService: UrlService, private eventService: EventService) {
+  constructor(private urlService: UrlService/*, private eventService: EventService*/) {
 
    }
 
@@ -32,7 +32,6 @@ export class UrlCreationFormComponent implements OnInit {
      if (form.invalid) {
         return;
      }
-    //alert('click boton. url '+this.newUrlLongModel);
     var urlDTO: UrlDTO;
     this.resetTemporalValues();
     this.urlService.addUrlBackend(this.newUrlLongModel).subscribe(responseWrapperDTO=>
@@ -46,6 +45,8 @@ export class UrlCreationFormComponent implements OnInit {
               this.errorMessage = "Error code:"+responseWrapperDTO.errorDesc.errorCode+", "+
                           "Error message:"+responseWrapperDTO.errorDesc.errorDesc;
             }
+        },error=>{
+          this.errorMessage = "Error processing the request against the server";
         }
       );
 
